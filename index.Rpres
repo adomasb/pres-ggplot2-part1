@@ -37,10 +37,44 @@ Dataset
 
 We will use few different datasets and we will start with classical Iris dataset. Data frame will be converted to `data.table`.
 
-```{r, results='hide', eval=FALSE}
+```{r, results='hide'}
 library(datasets)
 library(data.table)
 iris <- data.table(iris)
 ```
 
 Now take a look at data with already known methods.
+
+Quick plot
+=========================================================
+
+Install `ggplot2` if you don't have it yet and load it
+
+```{r, results='hide'}
+library(ggplot2)
+```
+
+`qplot()` is basic and simple function, very similar to `plot()`.
+
+Basic syntax of `qplot`
+
+```{r, results='hide', eval=FALSE}
+qplot(x, y, data)
+```
+
+Scatter plot
+=========================================================
+
+If we want to plot simple scatter plot of sepal length and petal length
+
+```{r, results='hide', eval=FALSE}
+qplot(Sepal.Length, Petal.Length, data = iris)
+```
+
+Scatter1 {.flexbox .vcenter}
+=========================================================
+title: FALSE
+
+```{r, echo=FALSE}
+qplot(Sepal.Length, Petal.Length, data = iris)
+```

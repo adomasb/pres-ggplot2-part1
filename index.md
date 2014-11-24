@@ -45,3 +45,38 @@ iris <- data.table(iris)
 ```
 
 Now take a look at data with already known methods.
+
+Quick plot
+=========================================================
+
+Install `ggplot2` if you don't have it yet and load it
+
+
+```r
+library(ggplot2)
+```
+
+`qplot()` is basic and simple function, very similar to `plot()`.
+
+Basic syntax of `qplot`
+
+
+```r
+qplot(x, y, data)
+```
+
+Scatter plot
+=========================================================
+
+If we want to plot simple scatter plot of sepal length and petal length
+
+
+```r
+qplot(Sepal.Length, Petal.Length, data = iris)
+```
+
+Scatter1 {.flexbox .vcenter}
+=========================================================
+title: FALSE
+
+![plot of chunk unnamed-chunk-5](index-figure/unnamed-chunk-5-1.png) 
