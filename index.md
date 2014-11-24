@@ -1,0 +1,47 @@
+How to visualize insights from data? Part I
+========================================================
+author: Adomas
+date: 2014-11-24
+
+HW solutions
+========================================================
+
+Homework solutions to `data.table` homework could be [found here](https://github.com/adomasb/pres-datatable/blob/gh-pages/solutions.R).
+
+Motivation
+========================================================
+
+Let's start with some quoutes:
+
+*"Visualizations act as a campfire around which we gather to tell stories."* -- Al Shalloway
+
+*"The greatest value of a picture is when it forces us to notice what we never expected to see."* -- John Tukey
+
+Plan of workshop
+========================================================
+
+- What is `ggplot2`?
+- Iris dataset
+- `qplot`
+
+
+What is ggplot2?
+========================================================
+
+`ggplot2` - grammar of graphics 2, written by Hadley Wickam, creator of already covered `dplyr`.
+
+`ggplot2` combines best practises and allows sophisticated and yet attractive data visualization of mulitlayered plots, which are impossible to reproduce in base engine.
+
+Dataset
+========================================================
+
+We will use few different datasets and we will start with classical Iris dataset. Data frame will be converted to `data.table`.
+
+
+```r
+library(datasets)
+library(data.table)
+iris <- data.table(iris)
+```
+
+Now take a look at data with already known methods.
