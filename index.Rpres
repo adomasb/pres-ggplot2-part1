@@ -3,10 +3,12 @@ How to visualize insights from data? Part I
 author: Adomas
 date: 2014-11-24
 
-HW solutions
+HW solutions & data.table cheatsheet
 ========================================================
 
 Homework solutions to `data.table` homework could be [found here](https://github.com/adomasb/pres-datatable/blob/gh-pages/solutions.R).
+
+You can always use this [`data.table` cheatsheet](https://s3.amazonaws.com/assets.datacamp.com/img/blog/data+table+cheat+sheet.pdf)
 
 Motivation
 ========================================================
@@ -17,25 +19,38 @@ Let's start with some quoutes:
 
 *"The greatest value of a picture is when it forces us to notice what we never expected to see."* -- John Tukey
 
+What is our goal?
+========================================================
+
+To be at least better than this dolphin when visualizing insigths
+
+![Alt text](dolphin.gif)
+
+
+
 Plan of workshop
 ========================================================
 
 - What is `ggplot2`?
 - Iris dataset
 - `qplot`
-
+- Scatter plots
+- `geom`s: `boxplot`, `histogram`, `density` & `bar`
+- Multiple plots
+- Fill & colour
+- Homework
 
 What is ggplot2?
 ========================================================
 
 `ggplot2` - grammar of graphics 2, written by Hadley Wickam, creator of already covered `dplyr`.
 
-`ggplot2` combines best practises and allows sophisticated and yet attractive data visualization of mulitlayered plots, which are impossible to reproduce in base engine.
+`ggplot2` combines best practises and allows sophisticated and yet attractive data visualization of mulitlayered plots, which are nearly impossible to reproduce with base engine.
 
 Dataset
 ========================================================
 
-We will use few different datasets and we will start with classical Iris dataset. Data frame will be converted to `data.table`.
+We will use classical Iris dataset. Data frame will be converted to `data.table`, which we know already
 
 ```{r, results='hide'}
 library(datasets)
@@ -59,7 +74,7 @@ library(ggplot2)
 Basic syntax of `qplot`
 
 ```{r, results='hide', eval=FALSE}
-qplot(x, y, data)
+qplot(x, y, data, geom)
 ```
 
 Scatter plot
@@ -78,3 +93,189 @@ title: FALSE
 ```{r, echo=FALSE}
 qplot(Sepal.Length, Petal.Length, data = iris)
 ```
+
+**TASK:** plot scatterplot of Sepal Width and Sepal Length
+
+Transformation
+============================================================
+
+One can quickly apply any transformation to data by specifying function directly on variable. Let's plot log-linear plot of petal length and width
+
+```{r, results='hide', eval=FALSE}
+qplot(Petal.Length, log(Petal.Width), data = iris)
+```
+
+============================================================
+```{r, echo=FALSE}
+qplot(Petal.Length, log(Petal.Width), data = iris)
+```
+
+**TASK:** Plot the same variables as log-log scatter plot
+
+Other geoms'zzzzzz
+==============================================================
+
+Without specifying `geom` argument in `qplot()`, `ggplot2` selects plot automatically. However, we can determine what kind of plot we want. Few most common:
+
+- `boxplot`
+- `histogram`
+- `density`
+- `bar` (barplot)
+
+Boxplot
+================================================================
+
+Thus, if we want boxplot, we should specify `geom="boxplot"`, thus boxplot of petal length
+
+```{r, results='hide', eval=FALSE}
+qplot("Petal Length", Petal.Length, data = iris, geom="boxplot")
+```
+
+================================================================
+
+```{r, echo=FALSE}
+qplot("Petal Length", Petal.Length, data = iris, geom="boxplot")
+```
+
+**TASK:** Plot boxplot of Sepal lengths, don't forget to change `x` variable
+
+Boxplot by species
+===============================================================
+
+Usually we are more interested in several boxplots by some kind of factors, as in our case species, thus this can be quickly done by specifying `Species` as variable
+
+```{r, results='hide', eval=FALSE}
+qplot(Species, Petal.Length, data = iris, geom="boxplot")
+```
+
+================================================================
+
+```{r, echo=FALSE}
+qplot(Species, Petal.Length, data = iris, geom="boxplot")
+```
+
+Histogram
+================================================================
+
+If we want to plot histogram, we do not have to specify `geom`, because histogram is only from one variable, thus specifying didn't hurt anybody yet. Thus histogram of petal widths
+
+```{r, results='hide', eval=FALSE}
+qplot(Petal.Width, data = iris, geom="histogram")
+```
+
+==================================================================
+
+```{r, echo=FALSE}
+qplot(Petal.Width, data = iris)
+```
+
+**TASK:** plot density of Petal.Length
+
+Barplot
+====================================================================
+
+Barplot is plotted when `bar` specified in `geom` argument. Since usually barplots are plotted by different factors, thus if we plot Species, then barplots represent count of each of Species
+
+```{r, results='hide', eval=FALSE}
+qplot(Species, data = iris, geom="bar")
+```
+
+====================================================================
+
+```{r, echo=FALSE}
+qplot(Species, data = iris, geom="bar")
+```
+
+Multiple plots
+====================================================================
+
+To plot multiple plots with same data, we have to combine plots values into vector. Let's technically plot histogram and density in the same plot
+
+```{r, results='hide', eval=FALSE}
+qplot(Sepal.Length/50, data = iris, geom=c("histogram", "density"))
+```
+
+=====================================================================
+
+```{r, echo=FALSE}
+qplot(Sepal.Length/50, data = iris, geom=c("histogram", "density"))
+```
+
+Fill & Colour
+====================================================================
+
+If we want add colour or fills to plots, we must specify variables of data to two other arguments `fill` and `colour`. For example, let's colour our first scatterplot by Species
+
+```{r, results='hide', eval=FALSE}
+qplot(Sepal.Length, Petal.Length, data = iris, colour = Species)
+```
+
+====================================================================
+
+```{r, echo=FALSE}
+qplot(Sepal.Length, Petal.Length, data = iris, colour = Species)
+```
+
+Intensity
+==============================================================
+
+Moreover, we can plot two numeric variables and colour them by third numeric variable
+
+```{r, results='hide', eval=FALSE}
+qplot(Sepal.Length, Petal.Length, data = iris, colour = Petal.Width)
+```
+
+==============================================================
+
+```{r, echo=FALSE}
+qplot(Sepal.Length, Petal.Length, data = iris, colour = Petal.Width)
+```
+
+**TASK:** plot histogram of petal width and fill it with colours by species
+
+Colours by same variable
+==============================================================
+
+Our previous barplot looked very odd, thus we can fill it by the same Species variable
+
+```{r, results='hide', eval=FALSE}
+qplot(Species, data = iris, geom="bar", fill=Species)
+```
+
+===============================================================
+
+```{r, echo=FALSE}
+qplot(Species, data = iris, geom="bar", fill=Species)
+```
+
+**TASK:** plot Species barplots and now colour them by Species and see what happens
+
+Homework data set
+===================================================================
+
+Use data set named `Indometh` from the same `datasets` library
+
+```{r, results='hide', eval=FALSE}
+library(datasets)
+Indometh
+```
+
+Keep it as `data.frame` or convert it to `data.table` if you want
+
+HW tasks 1
+===================================================================
+
+**TASK 1:** Plot time and concentration (`conc`) as scatter plot
+
+**TASK 2:** Plot time and log of concentration and colour it by Subject
+
+**TASK 3:** Plot histogram of concentration and fill it by Subject
+
+HW tasks 2
+===================================================================
+
+**TASK 4:** Plot boxplot of concentration
+
+**TASK 5:** Plot boxplots of concentration by different Subjects and colour them by Subjects
+
+**TASK 6:** Plot lines and points of time and concentration and colour them by Subject (to plot line specify `"line"`)
