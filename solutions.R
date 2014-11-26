@@ -1,19 +1,3 @@
-DNase <- data.table(DNase)
-
-qplot(conc, density, data = DNase)
-
-qplot(Run, data = DNase, geom = "bar")
-
-
-qplot(time, conc, data=Indometh, colour = Subject)
-
-qplot(conc, data = Indometh, geom="histogram")
-
-qplot(time, data = Indometh, geom="density")
-
-qplot("Conc", conc, data = Indometh, geom="boxplot")
-
-
 # Task 1
 qplot(time, conc, data=Indometh, colour = Subject)
 
